@@ -36,7 +36,7 @@ export default function MainMenuScreen() {
         />
         <View className="flex-1 z-10 absolute bottom-10 h-1/3 items-center justify-between w-full px-10 py-12">
           <Text className="text-white text-2xl font-thin text-center">
-            Try matching the WillowTree Employee to their photo
+            Try matching the WillowTree Employee to their photo PRE COMMIT TEST!
           </Text>
           <TouchableOpacity
             //onPress={() => goToGame("practice")}

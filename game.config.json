@@ -1,0 +1,7 @@
+{
+  "teammates": { "web": 6, "mobile": 6 },
+  "timedModeDurationSeconds": { "web": 20, "mobile": 20 },
+  "maxRounds": { "web": 5, "mobile": 5 },
+  "correctGuessDelay": 800,
+  "incorrectGuessDelay": 600
+}

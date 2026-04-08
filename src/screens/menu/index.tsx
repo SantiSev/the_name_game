@@ -11,7 +11,7 @@ export default function MenuScreen() {
   const isLandscape = width > height;
 
   const goToGame = (mode: "practice" | "timed") => {
-    //router.push({ pathname: "/game", params: { mode } });
+    router.push({ pathname: "/game", params: { mode } });
   };
 
   if (isWeb) {

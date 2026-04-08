@@ -1,50 +1,143 @@
-# Welcome to your Expo app 👋
+# The Name Game
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+A cross-platform mobile and web app built with **React Native (Expo)** that challenges users to match WillowTree employees to their headshots.
 
-## Get started
+---
 
-1. Install dependencies
+## 📱 Platforms
 
-   ```bash
-   npm install
-   ```
+| Platform | Status |
+|----------|--------|
+| Web | ✅ Supported |
+| iOS | ✅ Supported (via Expo Go) |
+| Android | ✅ Supported (via Expo Go) |
 
-2. Start the app
+---
 
-   ```bash
-   npx expo start
-   ```
+## 🚀 Getting Started
 
-In the output, you'll find options to open the app in a
+### Prerequisites
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+Make sure you have the following installed:
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+- [Node.js](https://nodejs.org/) (v20 or higher)
+- [npm](https://www.npmjs.com/) (v10 or higher)
+- [Expo Go](https://expo.dev/client) on your mobile device (for mobile testing)
 
-## Get a fresh project
+### Installation
 
-When you're ready, run:
-
+1. Clone the repository:
 ```bash
-npm run reset-project
+git clone https://github.com/your-username/name_game.git
+cd name_game
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+2. Install dependencies:
+```bash
+npm install
+```
 
-## Learn more
+3. Start the development server:
+```bash
+# Standard (requires same WiFi network)
+npx expo start
 
-To learn more about developing your project with Expo, look at the following resources:
+# Tunnel mode (works across any network — recommended)
+npx expo start --tunnel
+```
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+---
 
-## Join the community
+## 🗂️ Project Structure
 
-Join our community of developers creating universal apps.
+```
+name_game/
+├── app/                        # Expo Router pages (routes)
+│   ├── _layout.tsx             # Root navigation layout
+│   ├── index.tsx               # Main menu screen
+│   └── game.tsx                # Game screen
+├── src/
+│   ├── assets/                 # Images, fonts, icons
+│   ├── components/             # Reusable UI components
+│   ├── hooks/                  # Custom React hooks
+│   ├── screens/                # Full page screen components
+│   ├── services/               # Services dedicated to API calls and others
+│   ├── types/                  # TypeScript interfaces
+│   ├── utils/                  # Helper functions
+├── .github/
+│   └── workflows/
+│       └── build-check.yml     # CI/CD pipeline
+├── global.css                  # NativeWind/Tailwind base styles
+├── tailwind.config.js          # NativeWind configuration
+├── app.json                    # Expo configuration
+└── tsconfig.json               # TypeScript configuration
+```
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+---
+
+## 🎯 Game Modes
+
+### Practice Mode *(Mobile & Web)*
+- 6 random employee headshots are displayed
+- The name of one employee is shown — pick the correct headshot
+- One wrong guess ends the game and shows your score
+- Click OK to return to the menu
+
+### Timed Mode *(Mobile only)*
+- Same concept as Practice Mode
+- Wrong guesses don't end the game — keep guessing until correct
+- Score as many correct matches as you can before the timer runs out
+- Final score is displayed when time is up
+
+---
+
+## 🏗️ Architecture
+
+This project follows an **MVVM-inspired** architecture:
+
+- **Model** → `src/types/index.ts` + `src/services/api.ts` — data shape and fetching
+- **ViewModel** → `src/hooks/useGameLogic.ts` — all game state and business logic
+- **View** → `src/screens/` + `src/components/` — pure UI, no business logic
+
+This separation means the game logic is completely decoupled from the UI. The screens only receive state and callbacks from the hook — they never directly manage game logic.
+
+---
+
+## 🛠️ Tech Stack
+
+| Tool | Purpose |
+|------|---------|
+| [Expo](https://expo.dev/) | React Native framework |
+| [Expo Router](https://expo.github.io/router/) | File-based navigation |
+| [NativeWind v4](https://www.nativewind.dev/) | Tailwind CSS for React Native |
+| [TypeScript](https://www.typescriptlang.org/) | Type safety |
+| [ESLint](https://eslint.org/) | Code linting |
+| [Prettier](https://prettier.io/) | Code formatting |
+| [Husky](https://typicode.github.io/husky/) | Git pre-commit hooks |
+
+---
+
+
+## ✅ CI/CD
+
+Every pull request and push to `main`/`master` triggers a GitHub Actions pipeline that:
+
+1. Installs dependencies with `npm ci`
+2. Runs ESLint
+3. Runs TypeScript type checking (`tsc --noEmit`)
+
+The PR is blocked from merging if any of these checks fail.
+
+---
+
+## 🔒 Pre-commit Hooks
+
+Husky runs `lint-staged` before every commit:
+
+- ESLint auto-fixes linting issues
+- Prettier formats all `.ts` and `.tsx` files
+
+If unfixable errors are found, the commit is blocked.
+
+---
+

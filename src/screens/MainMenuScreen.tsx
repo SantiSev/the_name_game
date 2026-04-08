@@ -65,7 +65,8 @@ export default function MainMenuScreen() {
         />
         <View className="z-10 h-full w-1/2 justify-center items-center px-8 gap-4 ml-auto mr-32">
           <Text className="text-white text-lg font-normal text-center px-10">
-            Try matching the WillowTree Employee to their photo
+            Try matching the WillowTree Employee to their photo Testing out the
+            gh action
           </Text>
           <TouchableOpacity
             //onPress={() => goToGame("practice")}

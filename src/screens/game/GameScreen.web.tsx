@@ -4,24 +4,27 @@ import {
   Image,
   TouchableOpacity,
   ActivityIndicator,
+  StyleSheet,
 } from "react-native";
+import { Image as ExpoImage } from "expo-image";
 import { Teammate, GuessResult } from "../../types";
+
+const correctIcon = require("../../assets/images/Correct.svg");
+const wrongIcon = require("../../assets/images/Wrong.svg");
 
 interface Props {
   currentSix: Teammate[];
   correctAnswer: Teammate | null;
-  score: number;
   guessResult: GuessResult;
   lastGuessId: string | null;
   isLoading: boolean;
   onGuess: (teammate: Teammate) => void;
-  onContinue: () => void; // ← new prop
+  onContinue: () => void;
 }
 
 export default function GameScreenWeb({
   currentSix,
   correctAnswer,
-  score,
   guessResult,
   lastGuessId,
   isLoading,
@@ -72,7 +75,6 @@ export default function GameScreenWeb({
                 <TouchableOpacity
                   key={teammate.id}
                   onPress={() => onGuess(teammate)}
-                  // disable all cards once correct answer found
                   disabled={guessResult !== null}
                   className={`border-4 rounded-2xl overflow-hidden ${getBorderColor(teammate)}`}
                   style={{ width: 250, height: 250 }}
@@ -82,6 +84,25 @@ export default function GameScreenWeb({
                     style={{ width: "100%", height: "100%" }}
                     resizeMode="cover"
                   />
+                  {lastGuessId === teammate.id && guessResult !== null && (
+                    <View
+                      style={[
+                        StyleSheet.absoluteFillObject,
+                        guessResult === "correct"
+                          ? styles.overlayCorrect
+                          : styles.overlayIncorrect,
+                      ]}
+                      className="items-center justify-center"
+                    >
+                      <ExpoImage
+                        source={
+                          guessResult === "correct" ? correctIcon : wrongIcon
+                        }
+                        style={{ width: 80, height: 80 }}
+                        contentFit="contain"
+                      />
+                    </View>
+                  )}
                 </TouchableOpacity>
               ))}
             </View>
@@ -101,3 +122,8 @@ export default function GameScreenWeb({
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  overlayCorrect: { backgroundColor: "rgba(34, 197, 94, 0.7)" },
+  overlayIncorrect: { backgroundColor: "rgba(239, 68, 68, 0.7)" },
+});

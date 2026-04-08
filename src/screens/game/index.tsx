@@ -25,7 +25,6 @@ export default function GameScreen() {
   const {
     currentSix,
     correctAnswer,
-    score,
     isGameOver,
     guessResult,
     lastGuessId,
@@ -43,7 +42,6 @@ export default function GameScreen() {
   const sharedProps = {
     currentSix,
     correctAnswer,
-    score,
     guessResult,
     lastGuessId,
     isLoading,
@@ -53,7 +51,13 @@ export default function GameScreen() {
   const renderScreen = () => {
     if (isWeb) return <GameScreenWeb {...sharedProps} onContinue={nextRound} />;
     if (isLandscape)
-      return <GameScreenLandscape {...sharedProps} timeLeft={timeLeft} />;
+      return (
+        <GameScreenLandscape
+          {...sharedProps}
+          mode={gameMode}
+          timeLeft={timeLeft}
+        />
+      );
     return (
       <GameScreenPortrait
         {...sharedProps}

@@ -104,10 +104,6 @@ export function useGameLogic(mode: GameMode) {
 
       if (isCorrect) {
         const newScore = state.score + 1;
-        const isLastRound =
-          Platform.OS !== "web" &&
-          mode !== "timed" &&
-          newRounds.length >= gameConfig.maxRoundsCount;
 
         setState((prev) => ({
           ...prev,
@@ -115,11 +111,10 @@ export function useGameLogic(mode: GameMode) {
           lastGuessId: guessedTeammate.id,
           score: newScore,
           rounds: newRounds,
-          isGameOver: isLastRound,
         }));
 
-        if (!isLastRound && Platform.OS !== "web") {
-          // Mobile only — auto advance
+        if (Platform.OS !== "web") {
+          // Mobile only — auto advance on correct guess
           setTimeout(
             () => nextRound(state.allTeammates, newScore, newRounds),
             gameConfig.correctGuessDelay,
@@ -131,16 +126,9 @@ export function useGameLogic(mode: GameMode) {
           guessResult: "incorrect",
           lastGuessId: guessedTeammate.id,
           rounds: newRounds,
-          isGameOver: Platform.OS === "web",
+          // Practice mode ends on wrong guess; timed mode continues until timer
+          isGameOver: mode === "practice",
         }));
-
-        if (Platform.OS !== "web" && mode !== "timed") {
-          // Practice mode only — auto advance after wrong guess
-          setTimeout(
-            () => nextRound(state.allTeammates, state.score, newRounds),
-            gameConfig.incorrectGuessDelay,
-          );
-        }
       }
     },
     [state, mode, nextRound],
